@@ -35,6 +35,22 @@ class ScholarshipCalculatorTest {
         assertThrows(IllegalArgumentException.class, () -> calc.letterGrade(101));
     }
 
+    @Test
+    void letterGrade_checksEveryBoundary() {
+        assertEquals("F", calc.letterGrade(0));
+        assertEquals("F", calc.letterGrade(59.99));
+        assertEquals("D", calc.letterGrade(60));
+        assertEquals("D", calc.letterGrade(69.99));
+        assertEquals("C", calc.letterGrade(70));
+        assertEquals("C", calc.letterGrade(79.99));
+        assertEquals("B", calc.letterGrade(80));
+        assertEquals("B", calc.letterGrade(89.99));
+        assertEquals("A", calc.letterGrade(90));
+        assertEquals("A", calc.letterGrade(100));
+        assertThrows(IllegalArgumentException.class, () -> calc.letterGrade(-0.01));
+        assertThrows(IllegalArgumentException.class, () -> calc.letterGrade(100.01));
+    }
+
     // ---- gpa: давталт, switch-ийн бүх салаа — гэхдээ зөвхөн муж шалгана ----
 
     @Test
@@ -51,6 +67,11 @@ class ScholarshipCalculatorTest {
     void gpa_invalidInputs_throw() {
         assertThrows(IllegalArgumentException.class, () -> calc.gpa(null));
         assertThrows(IllegalArgumentException.class, () -> calc.gpa(new double[]{}));
+    }
+
+    @Test
+    void gpa_usesEveryLetterGradeValue() {
+        assertEquals(2.0, calc.gpa(new double[]{95, 85, 75, 65, 30}), 0.0001);
     }
 
     // ---- scholarship: бүх дүрмийн салаа — гэхдээ зөвхөн муж шалгана ----
@@ -73,5 +94,19 @@ class ScholarshipCalculatorTest {
     void scholarship_invalidInputs_throw() {
         assertThrows(IllegalArgumentException.class, () -> calc.scholarship(4.1, 10, false));
         assertThrows(IllegalArgumentException.class, () -> calc.scholarship(3.0, -1, false));
+    }
+
+    @Test
+    void scholarship_checksGpaAndCreditBoundaries() {
+        assertEquals(100, calc.scholarship(3.8, 15, false));
+        assertEquals(70, calc.scholarship(3.8, 14, false));
+        assertEquals(70, calc.scholarship(3.4, 12, false));
+        assertEquals(50, calc.scholarship(3.4, 11, false));
+        assertEquals(50, calc.scholarship(3.0, 0, false));
+        assertEquals(0, calc.scholarship(2.99, 20, false));
+        assertEquals(0, calc.scholarship(0, 0, false));
+        assertEquals(0, calc.scholarship(4, 0, true));
+        assertThrows(IllegalArgumentException.class, () -> calc.scholarship(-0.01, 0, false));
+        assertThrows(IllegalArgumentException.class, () -> calc.scholarship(4.01, 0, false));
     }
 }
