@@ -86,12 +86,5 @@ if (gpa >= 3.8 && credits >= 15) return 100;
 
 Line coverage нь кодын мөрүүдээр явсан эсэхийг хэмждэг, харин mutation score нь тестүүд буруу кодын өөрчлөлтийг илрүүлж чадсан эсэхийг хэмждэг. Тиймээс line coverage 100% байсан ч starter тестийн mutation score ердөө 27% байв. Exact assertion нэмсний дараа score 69% болж, зааг болон бүх салааны тест нэмсний дараа 94% болсон. Boundary тестүүд нь `>=`-г `>` болгосон зэрэг бодит алдааг илрүүлэхэд онцгой чухал байлаа. Equivalent мутант нь зан төлөвийг өөрчилдөггүй тул тестээр устгах боломжгүй, гэхдээ ийм ангиллыг болгоомжтой хийх хэрэгтэй. AI-аар тест үүсгүүлсэн үед кодын бүх мөрийг хамарсан эсэхээс гадна PIT score-оор тестийн чанарыг шалгах шаардлагатай. AI ихэвчлэн ерөнхий assertion үүсгэж болох тул exact output, boundary, exception, бүх branch-ийг тусад нь баталгаажуулах хэрэгтэй.
 
-## Commit-ууд
-
-1. `Starter`
-2. `B1 strengthen assertions`
-3. `Record B1 mutation results`
-4. `B2 boundary tests and manual mutant`
-5. `README mutation testing report`
 
 `target/` хавтас `.gitignore`-д орсон бөгөөд repository-д results-ийн текст нотолгоонуудыг хадгалсан.
